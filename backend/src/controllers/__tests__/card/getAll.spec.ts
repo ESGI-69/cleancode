@@ -1,11 +1,20 @@
-import { describe, expect, test } from '@jest/globals';
+import http from 'http';
+import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import request from 'supertest';
 
-import { app } from '../../../index';
+import { app } from '../../../express';
+
+let server: http.Server;
+
+beforeAll((done) => {
+  server = app.listen(4180, () => {
+    done();
+  });
+});
 
 describe('Retrive cards', () => {
   describe('given no tags is provided', () => {
-    test('should return all cards', () => request(app)
+    test('should return all cards', () => request(server)
       .get('/cards/')
       .expect(200)
       .then((response) => {
@@ -15,7 +24,7 @@ describe('Retrive cards', () => {
 
   describe('given tags is provided', () => {
     describe('given tags is a string', () => {
-      test('should return all cards with the provided tag', () => request(app)
+      test('should return all cards with the provided tag', () => request(server)
         .get('/cards/?tags=tag')
         .expect(200)
         .then((response) => {
@@ -24,7 +33,7 @@ describe('Retrive cards', () => {
     });
 
     describe('given tags is an array', () => {
-      test('should return all cards with the provided tags', () => request(app)
+      test('should return all cards with the provided tags', () => request(server)
         .get('/cards/?tags=tag1&tags=tag2')
         .expect(200)
         .then((response) => {
@@ -36,7 +45,7 @@ describe('Retrive cards', () => {
 
 describe('Create card', () => {
   describe('given a valid card', () => {
-    test('should return the created card', () => request(app)
+    test('should return the created card', () => request(server)
       .post('/cards/')
       .send({
         question: 'Question',
@@ -54,7 +63,7 @@ describe('Create card', () => {
   });
 
   describe('given an invalid card', () => {
-    test('should return an error', () => request(app)
+    test('should return an error', () => request(server)
       .post('/cards/')
       .send({
         question: 'Question',
@@ -64,3 +73,7 @@ describe('Create card', () => {
   });
 });
 
+afterAll((done) => {
+  server.close();
+  done();
+});

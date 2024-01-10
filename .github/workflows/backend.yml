@@ -1,0 +1,25 @@
+name: Backend tests
+run-name: ${{ github.actor }} launching backend tests
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+    
+jobs:
+  eslint:
+    name: Eslint (backend)
+    defaults:
+      run:
+        working-directory: backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install eslint
+        run: npm install eslint
+      - name: Launch eslint
+        run: npm run lint

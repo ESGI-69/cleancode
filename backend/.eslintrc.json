@@ -1,0 +1,61 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "project": "./tsconfig.json",
+    "sourceType": "module",
+    "tsconfigRootDir": "."
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "eol-last": [
+      "error",
+      "always"
+    ],
+    "require-await": "error",
+    "no-return-await": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "keyword-spacing": [ "error", { "before": true, "after": true } ],
+    "comma-spacing": [ "error", { "before": false, "after": true } ],
+    "no-trailing-spaces": "error",
+    "sort-imports": [ "error", { "ignoreDeclarationSort": true } ],
+    "object-curly-spacing": [ "error", "always" ],
+    "no-console": ["error", { "allow": ["warn", "error"]}],
+    "prefer-spread": "error",
+    "comma-dangle": ["error", "always-multiline"],
+    "func-call-spacing": ["error", "never"],
+    "space-infix-ops": "error",
+    "space-before-blocks": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    "no-multi-spaces": "error",
+    "semi-spacing": "error"
+  }
+}

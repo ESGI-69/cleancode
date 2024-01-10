@@ -10,4 +10,13 @@ export default {
       next(error);
     }
   },
+
+  create: (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const card = cardService.create(req.body);
+      res.status(201).json(card);
+    } catch (error) {
+      next(error);
+    }
+  },
 };

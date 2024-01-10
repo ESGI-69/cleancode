@@ -13,7 +13,7 @@ export enum CATEGORY {
 
 export interface CardUserData {
   question: string;
-  awnser: string;
+  answer: string;
   tag: string;
 }
 

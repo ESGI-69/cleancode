@@ -29,6 +29,11 @@ export default {
     return cards;
   },
 
+  getAllByTags: function(tags?: string[]): Card[] {
+    if (!tags) return cards;
+    return cards.filter((card) => tags.includes(card.tag));
+  },
+
   create: function(card: CardUserData): Card {
     const createdCard = {
       ...card,

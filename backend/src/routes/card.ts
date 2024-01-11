@@ -6,6 +6,6 @@ const router = Router();
 router.get('/', cardController.getAll);
 router.post('/', cardController.create);
 // router.get('/quizz', cardController.getQuizz);
-// router.patch('/:id/awnser', cardController.awnser);
+router.patch('/:id/answer', cardController.answer);
 
 export default router;

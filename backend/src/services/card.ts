@@ -25,6 +25,10 @@ export interface Card extends CardUserData {
 export const cards: Card[] = [];
 
 export default {
+  getById: function(id: string): Card | undefined {
+    return cards.find((card) => card.id === id);
+  },
+
   getAll: function(): Card[] {
     return cards;
   },
@@ -42,5 +46,14 @@ export default {
     };
     cards.push(createdCard);
     return createdCard;
+  },
+
+  updateCategory: function(id: string): void {
+    const cardIndex = cards.findIndex((card) => card.id === id);
+    if (cardIndex === -1) throw new Error('Card not found');
+    const card = cards[cardIndex];
+    if (card.category === CATEGORY.DONE) throw new Error('Card already DONE');
+    const nextCategory = Object.values(CATEGORY)[Object.values(CATEGORY).indexOf(card.category) + 1];
+    cards[cardIndex].category = nextCategory;
   },
 };

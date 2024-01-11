@@ -8,7 +8,8 @@
     "start": "ts-node src/index.ts",
     "lint": "eslint src/**/*.ts src/*.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:dev": "jest --watch"
   },
   "author": "",
   "license": "ISC",

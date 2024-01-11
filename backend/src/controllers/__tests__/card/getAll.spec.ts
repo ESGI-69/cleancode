@@ -63,11 +63,19 @@ describe('Create card', () => {
   });
 
   describe('given an invalid card', () => {
-    test('should return an error', () => request(server)
+    test('should return an error is key is missing', () => request(server)
       .post('/cards/')
       .send({
         question: 'Question',
         tag: 'Tag',
+      })
+      .expect(400));
+    test('should return an error is key at the wrong type', () => request(server)
+      .post('/cards/')
+      .send({
+        question: 'Question',
+        answer: 'Answer',
+        tag: 666,
       })
       .expect(400));
   });

@@ -22,7 +22,7 @@ export interface Card extends CardUserData {
   category: CATEGORY;
 }
 
-const cards: Card[] = [];
+export const cards: Card[] = [];
 
 export default {
   getAll: function(): Card[] {

@@ -1,6 +1,7 @@
 import http from 'http';
 import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import request from 'supertest';
+import { CATEGORY, Card, cards } from '../../../services/card';
 
 import { app } from '../../../express';
 
@@ -8,39 +9,50 @@ let server: http.Server;
 
 beforeAll((done) => {
   server = app.listen(4180, () => {
+    cards.push({
+      id: 'id1',
+      question: 'Question',
+      answer: 'Answer',
+      tag: 'Tag1',
+      category: CATEGORY.FIRST,
+    });
+    cards.push({
+      id: 'id2',
+      question: 'Question',
+      answer: 'Answer',
+      tag: 'Tag2',
+      category: CATEGORY.FIRST,
+    });
     done();
   });
 });
 
 describe('Retrive cards', () => {
-  describe('given no tags is provided', () => {
-    test('should return all cards', () => request(server)
-      .get('/cards/')
-      .expect(200)
-      .then((response) => {
-        expect(response.body).toHaveLength(0);
-      }));
-  });
+  test('should return all cards if not tag is provided', () => request(server)
+    .get('/cards/')
+    .expect(200)
+    .then((response) => {
+      expect(response.body).toHaveLength(2);
+      expect(response.body.map((card: Card) => card.id)).toContain('id1');
+      expect(response.body.map((card: Card) => card.id)).toContain('id2');
+    }));
 
-  describe('given tags is provided', () => {
-    describe('given tags is a string', () => {
-      test('should return all cards with the provided tag', () => request(server)
-        .get('/cards/?tags=tag')
-        .expect(200)
-        .then((response) => {
-          expect(response.body).toHaveLength(0);
-        }));
-    });
+  test('should return all cards with the provided tag', () => request(server)
+    .get('/cards/?tags=Tag1')
+    .expect(200)
+    .then((response) => {
+      expect(response.body).toHaveLength(1);
+      expect(response.body.map((card: Card) => card.id)).toContain('id1');
+    }));
 
-    describe('given tags is an array', () => {
-      test('should return all cards with the provided tags', () => request(server)
-        .get('/cards/?tags=tag1&tags=tag2')
-        .expect(200)
-        .then((response) => {
-          expect(response.body).toHaveLength(0);
-        }));
-    });
-  });
+  test('should return all cards with the provided tags', () => request(server)
+    .get('/cards/?tags=Tag1&tags=Tag2')
+    .expect(200)
+    .then((response) => {
+      expect(response.body).toHaveLength(2);
+      expect(response.body.map((card: Card) => card.id)).toContain('id1');
+      expect(response.body.map((card: Card) => card.id)).toContain('id2');
+    }));
 });
 
 describe('Create card', () => {
@@ -55,10 +67,15 @@ describe('Create card', () => {
       .expect(201)
       .then((response) => {
         expect(response.body).toHaveProperty('id');
+        expect(response.body.id).toHaveLength(36);
         expect(response.body).toHaveProperty('question');
+        expect(response.body.question).toBe('Question');
         expect(response.body).toHaveProperty('answer');
+        expect(response.body.answer).toBe('Answer');
         expect(response.body).toHaveProperty('tag');
+        expect(response.body.tag).toBe('Tag');
         expect(response.body).toHaveProperty('category');
+        expect(response.body.category).toBe(CATEGORY.FIRST);
       }));
   });
 

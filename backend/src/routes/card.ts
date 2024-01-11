@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import recipeController from '../controllers/card';
+import cardController from '../controllers/card';
 
 const router = Router();
 
-router.get('/', recipeController.getAll);
-router.post('/', recipeController.create);
-// router.get('/quizz', recipeController.getQuizz);
-// router.patch('/:id/awnser', recipeController.awnser);
+router.get('/', cardController.getAll);
+router.post('/', cardController.create);
+// router.get('/quizz', cardController.getQuizz);
+// router.patch('/:id/awnser', cardController.awnser);
 
 export default router;

@@ -1,7 +1,7 @@
 import http from 'http';
 import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import request from 'supertest';
-import { CATEGORY, cards } from '../../../services/card';
+import { CATEGORY, CardWithDate, cards } from '../../../services/card';
 
 import { app } from '../../../express';
 
@@ -17,6 +17,7 @@ beforeAll((done) => {
       answer: 'Answer',
       tag: 'Tag1',
       category: CATEGORY.FIRST,
+      createdAt: new Date(),
     });
     cards.push({
       id: '77dc8805-e48d-41cb-9b3c-778a2177e55a',
@@ -24,6 +25,7 @@ beforeAll((done) => {
       answer: 'Answer',
       tag: 'Tag2',
       category: CATEGORY.FIRST,
+      createdAt: new Date(),
     });
     done();
   });
@@ -40,16 +42,18 @@ describe('Create card', () => {
       })
       .expect(201)
       .then((response) => {
-        expect(response.body).toHaveProperty('id');
-        expect(response.body.id).toHaveLength(36);
-        expect(response.body).toHaveProperty('question');
-        expect(response.body.question).toBe('Question');
-        expect(response.body).toHaveProperty('answer');
-        expect(response.body.answer).toBe('Answer');
-        expect(response.body).toHaveProperty('tag');
-        expect(response.body.tag).toBe('Tag');
-        expect(response.body).toHaveProperty('category');
-        expect(response.body.category).toBe(CATEGORY.FIRST);
+        const card = response.body as CardWithDate;
+        expect(card).toHaveProperty('id');
+        expect(card.id).toHaveLength(36);
+        expect(card).toHaveProperty('question');
+        expect(card.question).toBe('Question');
+        expect(card).toHaveProperty('answer');
+        expect(card.answer).toBe('Answer');
+        expect(card).toHaveProperty('tag');
+        expect(card.tag).toBe('Tag');
+        expect(card).toHaveProperty('category');
+        expect(card.category).toBe(CATEGORY.FIRST);
+        expect(card).not.toHaveProperty('createdAt');
       }));
   });
 

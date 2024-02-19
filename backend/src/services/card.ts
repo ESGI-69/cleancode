@@ -22,27 +22,36 @@ export interface Card extends CardUserData {
   category: CATEGORY;
 }
 
-export const cards: Card[] = [];
+export interface CardWithDate extends Card {
+  createdAt: Date;
+}
+
+export const cards: CardWithDate[] = [];
 
 export default {
-  getById: function(id: string): Card | undefined {
+  getById: function(id: string): CardWithDate | undefined {
     return cards.find((card) => card.id === id);
   },
 
-  getAll: function(): Card[] {
+  getAll: function(): CardWithDate[] {
     return cards;
   },
 
-  getAllByTags: function(tags?: string[]): Card[] {
+  getAllByTags: function(tags?: string[]): CardWithDate[] {
     if (!tags) return cards;
     return cards.filter((card) => tags.includes(card.tag));
   },
 
-  create: function(card: CardUserData): Card {
+  getAllByCategory: function(category: CATEGORY): CardWithDate[] {
+    return cards.filter((card) => card.category === category);
+  },
+
+  create: function(card: CardUserData): CardWithDate {
     const createdCard = {
       ...card,
       category: CATEGORY.FIRST,
       id: uuidv4(),
+      createdAt: new Date(),
     };
     cards.push(createdCard);
     return createdCard;

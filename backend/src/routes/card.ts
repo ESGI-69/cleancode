@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', cardController.getAll);
 router.post('/', cardController.create);
-// router.get('/quizz', cardController.getQuizz);
+router.get('/quizz', cardController.quizz);
 router.patch('/:id/answer', cardController.answer);
 
 export default router;

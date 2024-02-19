@@ -1,7 +1,7 @@
 import http from 'http';
 import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import request from 'supertest';
-import { CATEGORY, cards } from '../../../services/card';
+import { CATEGORY, Card, cards } from '../../../services/card';
 
 import { app } from '../../../express';
 
@@ -17,6 +17,7 @@ beforeAll((done) => {
       answer: 'Answer',
       tag: 'Tag1',
       category: CATEGORY.FIRST,
+      createdAt: new Date(),
     });
     cards.push({
       id: '77dc8805-e48d-41cb-9b3c-778a2177e55a',
@@ -24,6 +25,7 @@ beforeAll((done) => {
       answer: 'Answer',
       tag: 'Tag2',
       category: CATEGORY.FIRST,
+      createdAt: new Date(),
     });
     cards.push({
       id: '66b20919-636c-419c-b0ba-9c47f6db0a4a',
@@ -31,6 +33,7 @@ beforeAll((done) => {
       answer: 'Answer',
       tag: 'Tag2',
       category: CATEGORY.DONE,
+      createdAt: new Date(),
     });
     done();
   });
@@ -43,8 +46,9 @@ describe('Answer card', () => {
       isValid: false,
     })
     .expect(204)
-    .then(() => {
-      expect(cards.find((card) => card.id === 'a357aacf-0638-4691-aeac-3ef83198d874')?.category).toBe(CATEGORY.FIRST);
+    .then((response) => {
+      expect(response.body).toEqual({});
+      expect(cards.find((card: Card) => card.id === 'a357aacf-0638-4691-aeac-3ef83198d874')?.category).toBe(CATEGORY.FIRST);
     }));
 
   test('should return 204 if the card is learned', () => request(server)
@@ -53,8 +57,9 @@ describe('Answer card', () => {
       isValid: true,
     })
     .expect(204)
-    .then(() => {
-      expect(cards.find((card) => card.id === 'a357aacf-0638-4691-aeac-3ef83198d874')?.category).toBe(CATEGORY.SECOND);
+    .then((response) => {
+      expect(response.body).toEqual({});
+      expect(cards.find((card: Card) => card.id === 'a357aacf-0638-4691-aeac-3ef83198d874')?.category).toBe(CATEGORY.SECOND);
     }));
 
   test('should return 404 if the card id is not valid', () => request(server)

@@ -33,7 +33,7 @@ export default {
       if (!req.params.id) throw new CustomError({ message: 'Missing card id', statusCode: 400 });
       const cardId = req.params.id;
       const currentCard = cardService.getById(cardId);
-      if (!currentCard) throw new CustomError({ message: 'Card not found', statusCode: 404 });
+      if (!currentCard) return res.status(404).send();
       if (!req.body.isValid === undefined) throw new CustomError({ message: 'Missing validity', statusCode: 400 });
       if (typeof req.body.isValid !== 'boolean') throw new CustomError({ message: 'Invalid validity', statusCode: 400 });
       if (currentCard.category === 'DONE') throw new CustomError({ message: 'Card already learned', statusCode: 400 });

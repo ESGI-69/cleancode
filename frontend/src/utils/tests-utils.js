@@ -7,12 +7,17 @@ export function createTestRouter() {
       {
         path: '/',
         name: 'home',
-        component: { template: '<div>Home</div>' },
+        component: { template: '<h1>Home</h1>' },
       },
       {
-        path: '/about',
-        name: 'about',
-        component: { template: '<div>About</div>' },
+        path: '/my-cards',
+        name: 'my-cards',
+        component: { template: '<h1>My Cards</h1>' },
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: { template: '<h1>Login</h1>' },
       },
     ],
   });

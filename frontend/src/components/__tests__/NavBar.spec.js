@@ -5,9 +5,9 @@ import { createTestRouter } from '@/utils/tests-utils';
 
 const TEST_USER_NAME = 'John';
 const HOME_LINK = '/';
-const ABOUT_LINK = '/about';
+const MY_CARDS_LINK = '/my-cards';
 const PROFILE_LINK = '/#';
-const LOGIN_LINK = '/#';
+const LOGIN_LINK = '/login';
 
 let router;
 const createWrapperOptions = (isLogged, userName = TEST_USER_NAME) => ({
@@ -40,7 +40,7 @@ describe('NavBar', () => {
       await router.isReady();
 
       expect(wrapper.get('#home-link').attributes('href')).toBe(HOME_LINK);
-      expect(wrapper.get('#about-link').attributes('href')).toBe(ABOUT_LINK);
+      expect(wrapper.get('#my-cards-link').attributes('href')).toBe(MY_CARDS_LINK);
       expect(wrapper.get('#profile-link').attributes('href')).toBe(PROFILE_LINK);
     });
   });
@@ -60,7 +60,7 @@ describe('NavBar', () => {
       await router.isReady();
 
       expect(wrapper.get('#home-link').attributes('href')).toBe(HOME_LINK);
-      expect(wrapper.get('#about-link').attributes('href')).toBe(ABOUT_LINK);
+      expect(wrapper.find('#my-cards-link').exists()).toBe(false);
       expect(wrapper.get('#login-link').attributes('href')).toBe(LOGIN_LINK);
     });
   });

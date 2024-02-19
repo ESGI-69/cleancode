@@ -9,11 +9,12 @@
         Home
       </RouterLink>
       <RouterLink
-        id="about-link"
+        v-if="isLogged"
+        id="my-cards-link"
         class="navbar__link"
-        to="/about"
+        to="/my-cards"
       >
-        About
+        My cards
       </RouterLink>
     </div>
     <div class="navbar__profile">
@@ -23,13 +24,13 @@
         class="navbar__link"
         to="#"
       >
-        {{ props.userName }}'s profile
+        {{ userName }}'s profile
       </RouterLink>
       <RouterLink
         v-else
         id="login-link"
         class="navbar__link"
-        to="#"
+        to="/login"
       >
         Login
       </RouterLink>
@@ -40,7 +41,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 
-const props = defineProps({
+defineProps({
   userName: {
     type: String,
     required: true,

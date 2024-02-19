@@ -42,6 +42,10 @@ export default {
     return cards.filter((card) => tags.includes(card.tag));
   },
 
+  getAllByCategory: function(category: CATEGORY): CardWithDate[] {
+    return cards.filter((card) => card.category === category);
+  },
+
   create: function(card: CardUserData): CardWithDate {
     const createdCard = {
       ...card,

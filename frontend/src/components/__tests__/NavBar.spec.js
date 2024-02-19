@@ -1,85 +1,67 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { createRouter, createMemoryHistory } from 'vue-router';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { mount } from '@vue/test-utils';
 import NavBar from '../NavBar.vue';
+import { createTestRouter } from '@/utils/tests-utils';
+
+const TEST_USER_NAME = 'John';
+const HOME_LINK = '/';
+const ABOUT_LINK = '/about';
+const PROFILE_LINK = '/#';
+const LOGIN_LINK = '/#';
 
 let router;
+const createWrapperOptions = (isLogged, userName = TEST_USER_NAME) => ({
+  props: {
+    userName,
+    isLogged,
+  },
+  global: {
+    plugins: [ router ],
+  },
+});
 
-beforeEach(() => {
-  router = createRouter({
-    history: createMemoryHistory(),
-    routes: [],
-  });
+beforeAll(() => {
+  router = createTestRouter();
 });
 
 describe('NavBar', () => {
-  it('renders profile text when logged in', async () => {
-    const wrapper = mount(NavBar, {
-      props: {
-        userName: 'John',
-        isLogged: true,
-      },
-      global: {
-        plugins: [ router ],
-      },
+  describe('when the user is logged in', () => {
+    it('renders the user\'s profile name', async () => {
+      const wrapper = mount(NavBar, createWrapperOptions(true));
+
+      await router.isReady();
+
+      expect(wrapper.text()).toContain(`${TEST_USER_NAME}'s profile`);
     });
 
-    await router.isReady();
+    it('renders the correct links', async () => {
+      const wrapper = mount(NavBar, createWrapperOptions(true));
 
-    expect(wrapper.text()).toContain('John\'s profile');
+      await router.isReady();
+
+      expect(wrapper.get('#home-link').attributes('href')).toBe(HOME_LINK);
+      expect(wrapper.get('#about-link').attributes('href')).toBe(ABOUT_LINK);
+      expect(wrapper.get('#profile-link').attributes('href')).toBe(PROFILE_LINK);
+    });
   });
 
-  it('renders login text when not logged in', async () => {
-    const wrapper = mount(NavBar, {
-      props: {
-        userName: '',
-        isLogged: false,
-      },
-      global: {
-        plugins: [ router ],
-      },
+  describe('when the user is not logged in', () => {
+    it('renders the login text', async () => {
+      const wrapper = mount(NavBar, createWrapperOptions(false));
+
+      await router.isReady();
+
+      expect(wrapper.text()).toContain('Login');
     });
 
-    await router.isReady();
+    it('renders the correct links', async () => {
+      const wrapper = mount(NavBar, createWrapperOptions(false));
 
-    expect(wrapper.text()).toContain('Login');
-  });
+      await router.isReady();
 
-  it('renders correct links when logged in', async () => {
-    const wrapper = mount(NavBar, {
-      props: {
-        userName: 'John',
-        isLogged: true,
-      },
-      global: {
-        plugins: [ router ],
-      },
+      expect(wrapper.get('#home-link').attributes('href')).toBe(HOME_LINK);
+      expect(wrapper.get('#about-link').attributes('href')).toBe(ABOUT_LINK);
+      expect(wrapper.get('#login-link').attributes('href')).toBe(LOGIN_LINK);
     });
-
-    await router.isReady();
-
-    const links = wrapper.findAll('a');
-    expect(links[0].attributes('href')).toBe('/');
-    expect(links[1].attributes('href')).toBe('/about');
-    expect(links[2].attributes('href')).toBe('/#');
-  });
-
-  it('renders correct links when not logged in', async () => {
-    const wrapper = mount(NavBar, {
-      props: {
-        userName: '',
-        isLogged: false,
-      },
-      global: {
-        plugins: [ router ],
-      },
-    });
-
-    await router.isReady();
-
-    const links = wrapper.findAll('a');
-    expect(links[0].attributes('href')).toBe('/');
-    expect(links[1].attributes('href')).toBe('/about');
-    expect(links[2].attributes('href')).toBe('/#');
   });
 });

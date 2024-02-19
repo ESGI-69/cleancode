@@ -1,22 +1,34 @@
 <template>
   <nav class="navbar">
     <div class="navbar__links">
-      <RouterLink to="/">
+      <RouterLink
+        id="home-link"
+        class="navbar__link"
+        to="/"
+      >
         Home
       </RouterLink>
-      <RouterLink to="/about">
+      <RouterLink
+        id="about-link"
+        class="navbar__link"
+        to="/about"
+      >
         About
       </RouterLink>
     </div>
     <div class="navbar__profile">
       <RouterLink
         v-if="isLogged"
+        id="profile-link"
+        class="navbar__link"
         to="#"
       >
         {{ props.userName }}'s profile
       </RouterLink>
       <RouterLink
         v-else
+        id="login-link"
+        class="navbar__link"
         to="#"
       >
         Login
@@ -26,7 +38,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const props = defineProps({

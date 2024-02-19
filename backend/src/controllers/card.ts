@@ -8,11 +8,17 @@ export default {
   getAll: (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.query.tags) {
-        return res.status(200).json(cardService.getAll());
+        const cards = cardService.getAll();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const response = cards.map(({ createdAt, ...card }) => card);
+        return res.status(200).json(response);
       }
       if (typeof req.query.tags === 'string') req.query.tags = [req.query.tags];
       if (!isValidTagList(req.query.tags)) throw new CustomError({ message: 'Invalid tags', statusCode: 400 });
-      return res.status(200).json(cardService.getAllByTags(req.query.tags));
+      const tagCards = cardService.getAllByTags(req.query.tags);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const response = tagCards.map(({ createdAt, ...card }) => card);
+      return res.status(200).json(response);
     } catch (error) {
       next(error);
     }
@@ -22,7 +28,9 @@ export default {
     try {
       if (!isValidCardUserData(req.body)) throw new CustomError({ message: 'Invalid card', statusCode: 400 });
       const card = cardService.create(req.body);
-      res.status(201).json(card);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { createdAt, ...cardData } = card;
+      res.status(201).json(cardData);
     } catch (error) {
       next(error);
     }

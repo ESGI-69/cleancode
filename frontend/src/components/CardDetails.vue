@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useLearningStore } from '@/stores/learningStore';
 
 const learningStore = useLearningStore();

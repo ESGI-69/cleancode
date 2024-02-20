@@ -9,9 +9,6 @@ export const useCardStore = defineStore('cardStore', {
     isPostCardLoading: false,
   }),
 
-  getters: {
-  },
-
   actions: {
     async fetchCards(tags = []) {
       this.isCardsLoading = true;

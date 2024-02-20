@@ -5,8 +5,10 @@ import CardDetails from '@/components/CardDetails.vue';
 import { useCardStore } from '@/stores/cardStore';
 import { nextTick } from 'vue';
 import { MOCK_CARDS } from '@/__mocks__/mockData';
+import { useLearningStore } from '@/stores/learningStore';
 
 vi.mock('@/stores/cardStore');
+vi.mock('@/stores/learningStore');
 
 describe('MyCardsView.vue', () => {
   it('displays loading state when cards are being fetched', async () => {
@@ -14,6 +16,12 @@ describe('MyCardsView.vue', () => {
       isCardsLoading: true,
       cards: [],
       fetchCards: vi.fn(),
+    });
+
+    useLearningStore.mockReturnValue({
+      isPacthAnswerLoading: false,
+      patchAnswer: vi.fn(),
+      fetchQuizz: vi.fn(),
     });
 
     const wrapper = mount(MyCardsView);
@@ -46,7 +54,6 @@ describe('MyCardsView.vue', () => {
     expect(fetchCardsMock).toHaveBeenCalledWith(tags);
   });
 
-
   it('displays CardDetails components for each card when cards are available', async () => {
 
     useCardStore.mockReturnValue({
@@ -68,6 +75,9 @@ describe('MyCardsView.vue', () => {
         question: card.question,
         category: card.category,
         tag: card.tag,
+        answer: '',
+        id: card.id,
+        quizzMode: false,
       });
     });
   });

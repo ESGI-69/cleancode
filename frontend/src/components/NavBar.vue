@@ -16,6 +16,14 @@
       >
         My cards
       </RouterLink>
+      <RouterLink
+        v-if="isLogged"
+        id="create-card-link"
+        class="navbar__link"
+        to="/quizz"
+      >
+        Quizz
+      </RouterLink>
     </div>
     <div class="navbar__profile">
       <RouterLink

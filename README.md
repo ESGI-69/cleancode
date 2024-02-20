@@ -3,6 +3,29 @@
 ## Lancement du projet
 
 ### Frontend
+#### Naviguer dans le dossier frontend
+
+```bash
+cd frontend
+```
+
+#### Installer les dépendances
+
+```bash
+npm install
+```
+
+#### Lancer le serveur
+
+```bash
+npm run dev
+```
+
+#### Lancer les tests
+
+```bash
+npm run test:unit
+```
 
 ### Backend
 
@@ -23,3 +46,13 @@ npm install
 ```bash
 npm run dev
 ```
+
+#### Lancer les tests
+
+```bash
+npm test
+```
+
+## Schémas architecture
+
+![Schéma archi](./assets/schema-archi.png)

@@ -21,6 +21,32 @@ describe('MyCardsView.vue', () => {
     expect(wrapper.text()).toContain('Loading...');
   });
 
+  it('calls fetchCards with entered tags when "Search by tag" button is clicked', async () => {
+    const fetchCardsMock = vi.fn();
+    useCardStore.mockReturnValue({
+      isCardsLoading: false,
+      cards: [],
+      fetchCards: fetchCardsMock,
+    });
+
+    const wrapper = mount(MyCardsView);
+
+    const tags = [ 'test', 'caca' ];
+
+    for (let i = 1; i < tags.length; i++) {
+      await wrapper.find('#add-tag-button').trigger('click');
+    }
+
+    tags.forEach((tag, index) => {
+      wrapper.find(`#tag-input-${index}`).setValue(tag);
+    });
+
+    await wrapper.find('#search-by-tag').trigger('click');
+
+    expect(fetchCardsMock).toHaveBeenCalledWith(tags);
+  });
+
+
   it('displays CardDetails components for each card when cards are available', async () => {
 
     useCardStore.mockReturnValue({

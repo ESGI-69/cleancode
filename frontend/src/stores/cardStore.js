@@ -13,10 +13,12 @@ export const useCardStore = defineStore('cardStore', {
   },
 
   actions: {
-    async fetchCards() {
+    async fetchCards(tags = []) {
       this.isCardsLoading = true;
       try {
-        const { data } = await $API.get('/cards');
+        const params = new URLSearchParams();
+        tags.forEach((tag) => params.append('tags', tag));
+        const { data } = await $API.get('/cards', { params });
         this.cards = data;
       } finally {
         this.isCardsLoading = false;

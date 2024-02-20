@@ -3,7 +3,7 @@
     user-name="Username"
     :is-logged="true"
   />
-  <div class="main-wrapper">
+  <div class="main__wrapper">
     <RouterView />
   </div>
 </template>
@@ -14,7 +14,7 @@ import NavBar from './components/NavBar.vue';
 </script>
 
 <style scoped>
-.main-wrapper {
+.main__wrapper {
   padding: 1rem
 }
 </style>

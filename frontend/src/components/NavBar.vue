@@ -59,7 +59,7 @@ defineProps({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: #dfe6e9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   &__links {

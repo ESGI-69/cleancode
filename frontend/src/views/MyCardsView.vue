@@ -4,10 +4,18 @@
     Loading...
   </div>
   <div
-    v-for="card in cards"
-    :key="card.id"
+    class="cards-container"
   >
-    <CardDetails :card="card" />
+    <div
+      v-for="card in cards"
+      :key="card.id"
+    >
+      <CardDetails
+        :question="card.question"
+        :category="card.category"
+        :tag="card.tag"
+      />
+    </div>
   </div>
 </template>
 
@@ -20,6 +28,16 @@ const cardStore = useCardStore();
 const isLoading = computed(() => cardStore.isCardsLoading);
 const cards = computed(() => cardStore.cards);
 
-
 cardStore.fetchCards();
 </script>
+
+<style lang="scss" scoped>
+.cards-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 20px;
+}
+</style>

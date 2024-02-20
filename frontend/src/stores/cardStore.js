@@ -9,15 +9,14 @@ export const useCardStore = defineStore('cardStore', {
     isPostCardLoading: false,
   }),
 
-  getters: {
-  },
-
   actions: {
     async fetchCards(tags = []) {
       this.isCardsLoading = true;
       try {
         const params = new URLSearchParams();
-        tags.forEach((tag) => params.append('tags', tag));
+        tags
+          .filter(tag => tag.trim() !== '')
+          .forEach((tag) => params.append('tags', tag));
         const { data } = await $API.get('/cards', { params });
         this.cards = data;
       } finally {

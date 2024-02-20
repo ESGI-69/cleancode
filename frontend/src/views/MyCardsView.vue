@@ -48,6 +48,7 @@
       :key="card.id"
     >
       <CardDetails
+        :id="card.id"
         :question="card.question"
         :category="card.category"
         :tag="card.tag"

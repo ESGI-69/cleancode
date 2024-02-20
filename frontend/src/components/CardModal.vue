@@ -91,6 +91,7 @@ defineExpose({
   z-index: 1;
   display: flex;
   justify-content: center;
+  color: #000000;
   &__container {
     margin-top: 6rem;
     background-color: white;

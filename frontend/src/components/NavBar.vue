@@ -16,6 +16,14 @@
       >
         My cards
       </RouterLink>
+      <RouterLink
+        v-if="isLogged"
+        id="create-card-link"
+        class="navbar__link"
+        to="/quizz"
+      >
+        Quizz
+      </RouterLink>
     </div>
     <div class="navbar__profile">
       <RouterLink
@@ -61,6 +69,7 @@ defineProps({
   align-items: center;
   background-color: #dfe6e9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000000;
 
   &__links {
     display: flex;

@@ -93,7 +93,7 @@ describe('Given the date is day 0', () => {
     .get('/cards/quizz')
     .expect(200)
     .then(({ body }) => {
-      expect(body.length).toBe(8);
+      expect(body.length).toBe(2);
       body.forEach((card: Card) => {
         expect(card.category).not.toBe(CATEGORY.DONE);
       });

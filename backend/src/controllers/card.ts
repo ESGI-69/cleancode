@@ -65,7 +65,7 @@ export default {
       cards.forEach((card) => {
         const daysDifference = Math.floor((date.getTime() - card.createdAt.getTime()) / (1000 * 60 * 60 * 24));
         if (daysDifference === 0 && card.category !== CATEGORY.DONE) {
-          responseCards.push(card);
+          if (card.category === CATEGORY.FIRST) responseCards.push(card);
         } else {
           if (card.category === CATEGORY.FIRST) responseCards.push(card);
           if (card.category === CATEGORY.SECOND && daysDifference % 2 === 0) responseCards.push(card);

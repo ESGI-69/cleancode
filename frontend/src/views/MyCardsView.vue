@@ -1,5 +1,10 @@
 <template>
   <h1>My cards</h1>
+  <button
+    @click="cardModalRef.changeModalState"
+  >
+    Add new card
+  </button>
   <div v-if="isLoading">
     Loading...
   </div>
@@ -17,16 +22,21 @@
       />
     </div>
   </div>
+  <CardModal
+    ref="cardModalRef"
+  />
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useCardStore } from '@/stores/cardStore';
 import CardDetails from '@/components/CardDetails.vue';
+import CardModal from '@/components/CardModal.vue';
 
 const cardStore = useCardStore();
 const isLoading = computed(() => cardStore.isCardsLoading);
 const cards = computed(() => cardStore.cards);
+const cardModalRef = ref(null);
 
 cardStore.fetchCards();
 </script>

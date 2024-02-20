@@ -1,1 +1,13 @@
 @import './base.scss';
+
+button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #dfe6e9;
+  &:hover {
+    background-color: #b2bec3;
+  }
+}

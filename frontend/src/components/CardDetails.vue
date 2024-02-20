@@ -53,7 +53,7 @@ defineProps({
   }
 
   &__tag {
-    background-color: #0984e3;
+    background-color: #a29bfe;
     color: white;
     padding: 5px;
     border-radius: 5px;

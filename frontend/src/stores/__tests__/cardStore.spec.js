@@ -47,4 +47,33 @@ describe('cardStore', () => {
       expect(store.isCardsLoading).toBe(false);
     });
   });
+
+  describe('postCard action', () => {
+    it('posts a card and fetches cards again', async () => {
+      const card = { name: 'Test Card', description: 'Test Description' };
+      $API.post.mockResolvedValue({ data: card });
+      $API.get.mockResolvedValue({ data: [ card ] });
+
+      expect(store.isPostCardLoading).toBe(false);
+      await store.postCard(card);
+
+      expect(store.isPostCardLoading).toBe(false);
+      expect(store.cards).toEqual([ card ]);
+    });
+
+    it('sets isPostCardLoading to false when an error occurs', async () => {
+      const card = { name: 'Test Card', description: 'Test Description' };
+      $API.post.mockRejectedValue(new Error('API error'));
+
+      expect(store.isPostCardLoading).toBe(false);
+
+      try {
+        await store.postCard(card);
+      } catch (err) {
+        expect(err.message).toBe('API error');
+      }
+
+      expect(store.isPostCardLoading).toBe(false);
+    });
+  });
 });

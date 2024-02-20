@@ -6,6 +6,7 @@ export const useCardStore = defineStore('cardStore', {
   state: () => ({
     cards: [],
     isCardsLoading: false,
+    isPostCardLoading: false,
   }),
 
   getters: {
@@ -19,6 +20,16 @@ export const useCardStore = defineStore('cardStore', {
         this.cards = data;
       } finally {
         this.isCardsLoading = false;
+      }
+    },
+
+    async postCard(card) {
+      this.isPostCardLoading = true;
+      try {
+        await $API.post('/cards', card);
+        await this.fetchCards();
+      } finally {
+        this.isPostCardLoading = false;
       }
     },
   },

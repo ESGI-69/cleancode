@@ -83,6 +83,7 @@ const removeTagInput = () => {
 };
 
 const searchByTags = () => {
+
   cardStore.fetchCards(tags);
 };
 

@@ -61,6 +61,7 @@ defineProps({
   align-items: center;
   background-color: #dfe6e9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000000;
 
   &__links {
     display: flex;
